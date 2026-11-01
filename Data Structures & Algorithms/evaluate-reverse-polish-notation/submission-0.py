@@ -1,0 +1,18 @@
+class Solution:
+  def evalRPN(self, tokens: list[str]) -> int:
+    stack = []
+    for token in tokens:
+      if token == "+":
+        stack.append(stack.pop() + stack.pop())
+      elif token == "-":
+        b, a = stack.pop(), stack.pop()
+        stack.append(a - b)
+      elif token == "*":
+        stack.append(stack.pop() * stack.pop())
+      elif token == "/":
+        b, a = stack.pop(), stack.pop()
+        # Truncate toward zero in Python (int(a / b) achieves this)
+        stack.append(int(a / b))
+      else:
+        stack.append(int(token))
+    return stack.pop()
